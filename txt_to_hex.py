@@ -1,5 +1,53 @@
-def convert_to_kim1_format(args, lines):
-    # Clean and split the input text into rows of hex bytes
+def convert_to_kim1_format(args):
+    origin_addr = args[0]
+    print(origin_addr)
+    
+    line = ""
+    x=2
+    j=17
+    (":10" + "origin_addr" + "00").join(line)
+    print(origin_addr[:2])
+    sum = hex(16)[2:] + hex(int(origin_addr[0:2], 16))[2:] + hex(int(origin_addr[2:], 16))[2:]
+    for x in range(j):
+        str(args[x]).join(line)
+        sum += hex(int(str(args[x]),16))[2:].upper()
+    print(sum)
+
+    return line
+        
+
+# The input data as provided
+with open("Nov12.txt") as f:
+    lines = f.read().splitlines()
+    f.close()
+# Split each line into arguments and flatten into a single list
+args = [arg for line in lines for arg in line.split()]
+
+# Convert the input to KIM-1 sendable format
+print(args)
+
+output_data = convert_to_kim1_format(args)
+
+check = """
+:10020000A9AA8D0040A2FFA0FF88D0FDCAD0F8A9FE
+:10021000558D0040A2FFA0FF88D0FDCAD0F84C0049
+:0102200002DB
+:00000001FF
+"""
+
+print(check)
+print("\n")
+
+# Print the formatted output
+print(output_data + "\n")
+if check == output_data:
+    print("Correct output\n")
+else:
+    print("Incorrect output\n")
+
+
+'''
+# Clean and split the input text into rows of hex bytes
     hex_lines = lines
 
     # Initialize an empty list to store formatted lines
@@ -40,31 +88,4 @@ def convert_to_kim1_format(args, lines):
     # Join all lines into a single string with newlines
     return "\n".join(kim1_lines)
 
-
-# The input data as provided
-input_file_name = input("Enter the input file name: ")
-with open(input_file_name) as f:
-    lines = f.read().splitlines()
-
-# Extract the address and data from the lines
-args = lines[0].split()
-
-# Convert the input to KIM-1 sendable format
-output_data = convert_to_kim1_format(args, lines[1:])
-
-check = """
-:10020000A9AA8D0040A2FFA0FF88D0FDCAD0F8A9FE
-:10021000558D0040A2FFA0FF88D0FDCAD0F84C0049
-:0102200002DB
-:00000001FF
-"""
-
-print(check)
-print("\n")
-
-# Print the formatted output
-print(output_data + "\n")
-if check == output_data:
-    print("Correct output\n")
-else:
-    print("Incorrect output\n")
+'''
