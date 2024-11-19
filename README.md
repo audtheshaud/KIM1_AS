@@ -6,7 +6,7 @@ This is a project to create a VS Code environment for ECE 287: KIM-1 Design Proj
 1. Install the Retroassembler VS Code extension
 2. Download the current Retroassembler version from https://enginedesigns.net/retroassembler/ and Unzip
 3. Set the file path of the retroassembler.exe or retroassembler.dll in VS Code extension settings for Retroassembler
-4. Go to https://dotnet.microsoft.com/en-us/download/dotnet and choose Out of Support Versions, then download .NET
+4. Follow this guide from Retroassembler to install .NET Runtime/SDK https://enginedesigns.net/post/2021/01/how_to_install_dotnet_on_linux_and_macos/
 
 ### Using the Python Script:
 1. Download the Python Script from this Repository by clicking the file and choosing download RAW file in the top right of the file viewer
