@@ -1,38 +1,21 @@
-def convert_to_kim1_format(args, lines):
-    # Clean and split the input text into rows of hex bytes
-    hex_lines = lines
+def convert_to_kim1_format(args):
+    origin_addr = args[0]
+    line = ""
+    x=0
+    j=18
+    line += f":10{origin_addr}00"
+    checksum = 16 + int(origin_addr[0:2], 16) + int(origin_addr[2:], 16)
 
-    # Initialize an empty list to store formatted lines
-    kim1_lines = []
-    
-    # Start with the provided origin address
-    org = int(args[0], 16)  # Treat the first argument as hex
-    
-    for arg in hex_lines:
-        # Remove spaces and concatenate the hexadecimal bytes
-        hex_data = arg.replace(" ", "")
-        
-        # Calculate the length of the data in this line (each pair of hex digits is 1 byte)
-        length = len(hex_data) // 2  # Divide by 2 since each byte is represented by 2 hex digits
-        
-        # Prepare the line in the KIM-1 format with explicit length
-        formatted_line = f":{length:02X}{org:04X}{hex_data.upper()}"
-        
-        # Calculate checksum as the sum of the bytes (excluding the checksum byte)
-        checksum = 0
-        for i in range(1, len(formatted_line), 2):  # Start at 1 to skip the ':' character
-            checksum += int(formatted_line[i:i+2], 16)
-        
-        checksum = checksum % 256
-        checksum = (256 - checksum) % 256  # Two's complement to get the correct checksum
-        
-        formatted_line += f"{checksum:02X}"
-        
-        # Add this formatted line to the list
-        kim1_lines.append(formatted_line)
-        
-        # Increment address for next data block
-        org += length
+    for x in range(1,j):
+        if len(args[x]) == 2:
+            line += args[x].upper()
+            checksum += int(args[x],16)
+        else:
+            x+=1
+    checksum = hex(0x100 - (checksum % 0x100))[2:].upper()
+    line += checksum
+    print(line)
+    return line
     
     # Add the final line to mark the end
     kim1_lines.append(":00000001FF")
@@ -42,15 +25,15 @@ def convert_to_kim1_format(args, lines):
 
 
 # The input data as provided
-input_file_name = input("Enter the input file name: ")
-with open(input_file_name) as f:
+with open("Nov12.txt") as f:
     lines = f.read().splitlines()
+    f.close()
 
 # Extract the address and data from the lines
-args = lines[0].split()
+args = [arg for line in lines for arg in line.split()]
 
 # Convert the input to KIM-1 sendable format
-output_data = convert_to_kim1_format(args, lines[1:])
+output_data = convert_to_kim1_format(args)
 
 check = """
 :10020000A9AA8D0040A2FFA0FF88D0FDCAD0F8A9FE
@@ -59,11 +42,10 @@ check = """
 :00000001FF
 """
 
-print(check)
-print("\n")
+print(check + "\n")
 
 # Print the formatted output
-print(output_data + "\n")
+#print(output_data + "\n")
 if check == output_data:
     print("Correct output\n")
 else:
