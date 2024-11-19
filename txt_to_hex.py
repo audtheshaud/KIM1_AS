@@ -1,7 +1,9 @@
 def convert_to_kim1_format(args):
+
+    kim1_intel_hex = ''''''
+
     origin_addr = args[0]
     line = ""
-    x=0
     j=18
     line += f":10{origin_addr}00"
     checksum = 16 + int(origin_addr[0:2], 16) + int(origin_addr[2:], 16)
@@ -12,16 +14,13 @@ def convert_to_kim1_format(args):
             checksum += int(args[x],16)
         else:
             x+=1
-    checksum = hex(0x100 - (checksum % 0x100))[2:].upper()
-    line += checksum
-    print(line)
-    return line
-    
-    # Add the final line to mark the end
-    kim1_lines.append(":00000001FF")
-    
-    # Join all lines into a single string with newlines
-    return "\n".join(kim1_lines)
+        if(x==j):
+            checksum = hex(0x100 - (checksum % 0x100))[2:].upper()
+            line += checksum
+            kim1_intel_hex += f"{line}\n"
+            origin_addr =
+            break
+    return kim1_intel_hex
 
 
 # The input data as provided
@@ -45,7 +44,7 @@ check = """
 print(check + "\n")
 
 # Print the formatted output
-#print(output_data + "\n")
+print(output_data + "\n")
 if check == output_data:
     print("Correct output\n")
 else:
