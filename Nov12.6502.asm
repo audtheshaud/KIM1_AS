@@ -24,3 +24,4 @@ Delay3b:
         bne Delay2b
 
         jmp             $0200
+        nop
