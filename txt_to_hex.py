@@ -1,31 +1,47 @@
 def convert_to_kim1_format(args):
-    origin_addr = args[0]
-    print(origin_addr)
-    
-    line = ""
-    x=2
-    j=17
-    (":10" + "origin_addr" + "00").join(line)
-    print(origin_addr[:2])
-    sum = hex(16)[2:] + hex(int(origin_addr[0:2], 16))[2:] + hex(int(origin_addr[2:], 16))[2:]
-    for x in range(j):
-        str(args[x]).join(line)
-        sum += hex(int(str(args[x]),16))[2:].upper()
-    print(sum)
 
-    return line
-        
+    kim1_intel_hex = ''''''
+
+    origin_addr = args[0]
+    line = ""
+    j=
+    line += f":10{origin_addr}00"
+    checksum = 16 + int(origin_addr[0:2], 16) + int(origin_addr[2:], 16)
+
+    for x in range(1,j):
+        if len(args[x]) == 2:
+            line += args[x].upper()
+            checksum += int(args[x],16)
+        else:
+            x+=1
+    checksum = hex(0x100 - (checksum % 0x100))[2:].upper()
+    line += checksum
+    kim1_intel_hex += f"{line}\n"
+    return kim1_intel_hex
+
 
 # The input data as provided
 with open("Nov12.txt") as f:
     lines = f.read().splitlines()
     f.close()
-# Split each line into arguments and flatten into a single list
+
+# Flatten the lines into one array of arguments: The addresses and the data
 args = [arg for line in lines for arg in line.split()]
 
-# Convert the input to KIM-1 sendable format
-print(args)
+# Clean the input args from the file by removing any addresses that are not % 10, this leaves 0200, 0210, 0220, etc.
+i = 0
+for arg in args:
+    if (len(arg) == 4 and int(arg) % 10 != 0):
+        args.pop(i)
+        i += 1
+    else:
+        i += 1
 
+print(f"{args}\n")
+print(f"{len(args)}\n")
+
+
+# Convert the input to KIM-1 sendable format
 output_data = convert_to_kim1_format(args)
 
 check = """
@@ -35,8 +51,7 @@ check = """
 :00000001FF
 """
 
-print(check)
-print("\n")
+print(check + "\n")
 
 # Print the formatted output
 print(output_data + "\n")
@@ -44,48 +59,3 @@ if check == output_data:
     print("Correct output\n")
 else:
     print("Incorrect output\n")
-
-
-'''
-# Clean and split the input text into rows of hex bytes
-    hex_lines = lines
-
-    # Initialize an empty list to store formatted lines
-    kim1_lines = []
-    
-    # Start with the provided origin address
-    org = int(args[0], 16)  # Treat the first argument as hex
-    
-    for arg in hex_lines:
-        # Remove spaces and concatenate the hexadecimal bytes
-        hex_data = arg.replace(" ", "")
-        
-        # Calculate the length of the data in this line (each pair of hex digits is 1 byte)
-        length = len(hex_data) // 2  # Divide by 2 since each byte is represented by 2 hex digits
-        
-        # Prepare the line in the KIM-1 format with explicit length
-        formatted_line = f":{length:02X}{org:04X}{hex_data.upper()}"
-        
-        # Calculate checksum as the sum of the bytes (excluding the checksum byte)
-        checksum = 0
-        for i in range(1, len(formatted_line), 2):  # Start at 1 to skip the ':' character
-            checksum += int(formatted_line[i:i+2], 16)
-        
-        checksum = checksum % 256
-        checksum = (256 - checksum) % 256  # Two's complement to get the correct checksum
-        
-        formatted_line += f"{checksum:02X}"
-        
-        # Add this formatted line to the list
-        kim1_lines.append(formatted_line)
-        
-        # Increment address for next data block
-        org += length
-    
-    # Add the final line to mark the end
-    kim1_lines.append(":00000001FF")
-    
-    # Join all lines into a single string with newlines
-    return "\n".join(kim1_lines)
-
-'''

@@ -1,4 +1,4 @@
-100 0200 a9 aa 8d 00 40 a2 ff a0 ff 88 d0 fd ca d0 f8 a9 fe
-100 0210 55 8d 00 40 a2 ff a0 ff 88 d0 fd ca d0 f8 4c 00 49
-100 0220 00 02 DB
-00 00 00 01 FF
+:10 0200 a9 aa 8d 00 40 a2 ff a0 ff 88 d0 fd ca d0 f8 a9 fe  -> 16 bytes of data which is why the line starts with 10
+:10 0210 55 8d 00 40 a2 ff a0 ff 88 d0 fd ca d0 f8 4c 00 49  -> 16 bytes of data which is why the line starts with 10
+:01 0220 00 02 DB -> 1 byte of data which is why the line starts with 01, The 00 means data bytes to the KIM-1
+:00 00 00 01 FF -> This means end of file
