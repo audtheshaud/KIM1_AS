@@ -16,4 +16,4 @@ This is a project to create a VS Code environment for ECE 287: KIM-1 Design Proj
 5. Run Retroassembler on Windows by doing this: *(Your File path)*\retroassembler.exe -O=txt *(Your File path)*\*(Your file name)**.6502.asm
    On MacOS and Linux run Retroassembler by doing this: dotnet *(Your File path)*/retroassembler.dll -O=txt *(Your File path)*/*(Your file name)*.6502.asm
 6. Now run the KIM1_TXT2HEX.py
-7. Copy the generated ouput from the VS Code Terminal
+7. Copy the generated ouput from the VS Code Terminal and use it just like ASM80
