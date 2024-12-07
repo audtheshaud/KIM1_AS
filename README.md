@@ -8,6 +8,8 @@ This is a project to create a VS Code environment for ECE 287: KIM-1 Design Proj
 3. Set the file path of the retroassembler.exe (Windows) or retroassembler.dll (MacOS and Linux) in VS Code extension settings for Retroassembler by going to VS Code's settings and searching Retroassembler
 4. Follow this guide from Retroassembler to install .NET Runtime/SDK https://enginedesigns.net/post/2021/01/how_to_install_dotnet_on_linux_and_macos/
 
+WINDOWS GUIDE: https://drive.google.com/file/d/1Vy-E6POxhhBO9Pdy23PAscVa_xgYmze9/view?usp=sharing
+
 ### Using the Python Script:
 1. Download the Python Script from this Repository by clicking the file and choosing download RAW file in the top right of the file viewer
 2. Place this file into the same folder as where you are writing your assembly code file
